@@ -1,30 +1,22 @@
-module MapGenerate {
-    export class Room {
-        id: number;
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-        neighbor: Room[];
-
-        constructor(id: number, x: number, y: number, width: number, height: number) {
+var MapGenerate;
+(function (MapGenerate) {
+    var Room = (function () {
+        function Room(id, x, y, width, height) {
             this.id = id;
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
-            this.neighbor = new Array();
         }
-
-        getDistanceToCenter(): number {
+        Room.prototype.getDistanceToCenter = function () {
             return Math.sqrt(this.x * this.x + this.y * this.y);
-        }
+        };
 
-        getSqrDistanceToCenter(): number {
+        Room.prototype.getSqrDistanceToCenter = function () {
             return this.x * this.x + this.y * this.y;
-        }
+        };
 
-        inCollisionWithOtherRoom(r: Room): boolean {
+        Room.prototype.inCollisionWithOtherRoom = function (r) {
             var minRx = r.x - r.width / 2;
             var maxRx = r.x + r.width / 2;
             var minRy = r.y - r.height / 2;
@@ -34,14 +26,16 @@ module MapGenerate {
             var miny = this.y - this.height / 2;
             var maxy = this.y + this.height / 2;
             return (minRx <= maxx && maxRx >= minx) && (minRy <= maxy && maxRy >= miny);
-        }
+        };
 
-        addNeighbor(room: Room) {
+        Room.prototype.addNeighbor = function (room) {
             this.neighbor.push(room);
-        }
+        };
 
-        print() {
+        Room.prototype.print = function () {
             console.log("x:" + this.x + ";y:" + this.y + ";width:" + this.width + ";height:" + this.height);
-        }
-    }
-}
+        };
+        return Room;
+    })();
+    MapGenerate.Room = Room;
+})(MapGenerate || (MapGenerate = {}));
